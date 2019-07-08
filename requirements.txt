@@ -59,8 +59,4 @@ wcwidth==0.1.7
 webencodings==0.5.1
 Werkzeug==0.15.1
 whichcraft==0.5.2
-<<<<<<< HEAD
 widgetsnbextension==3.4.2
-=======
-widgetsnbextension==3.4.2
->>>>>>> Add existing file
