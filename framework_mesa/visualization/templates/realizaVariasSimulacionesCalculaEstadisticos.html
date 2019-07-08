@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 210px;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #337ab7;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #337ab7;
+  cursor: pointer;
+}
+</style>
+
+<title></title>
+
+</head>
+<body>
+
+<form method="get" action="/realizaVariasSimulacionesCalculaEstadisticos">
+{% module xsrf_form_html() %} 
+
+<div class="slidecontainer">
+
+<p>
+Distancia maxima dentro de la cual se consideran que son vecinos
+<br>
+<input type="range" min="1" max="20" value="{{distanciaMaximaVecinos}}" class="slider" id="distanciaMaximaVecinos" name="distanciaMaximaVecinos">
+<span id="distanciaMaximaVecinosSpan">
+</span>
+</p>
+
+
+
+
+<p>
+Cantidad inicial de individuos chicos que nunca escalan. Solo comparten y ceden si el otro escala
+<br>
+<input type="range" min="0" max="10" value="{{cantidadNuncaEscalaChicosInicial}}" class="slider" id="cantidadNuncaEscalaChicosInicial" name="cantidadNuncaEscalaChicosInicial">
+<span id="cantidadNuncaEscalaChicosInicialSpan">
+</span>
+</p>
+
+<p>
+Cantidad inicial de individuos grandes que nunca escalan. Solo comparten y ceden si el otro escala
+<br>
+<input type="range" min="0" max="10" value="{{cantidadNuncaEscalaGrandesInicial}}" class="slider" id="cantidadNuncaEscalaGrandesInicial" name="cantidadNuncaEscalaGrandesInicial">
+<span id="cantidadNuncaEscalaGrandesInicialSpan">
+</span>
+</p>
+
+
+
+
+
+<p>
+Cantidad inicial de individuos chicos que siempre escalan. Nunca comparten, gana o pierde el recurso
+<br>
+<input type="range" min="0" max="10" value="{{cantidadSiempreEscalaChicosInicial}}" class="slider" id="cantidadSiempreEscalaChicosInicial" name="cantidadSiempreEscalaChicosInicial">
+<span id="cantidadSiempreEscalaChicosInicialSpan">
+</span>
+</p>
+
+<p>
+Cantidad inicial de individuos grandes que siempre escalan. Nunca comparten, gana o pierde el recurso
+<br>
+<input type="range" min="0" max="10" value="{{cantidadSiempreEscalaGrandesInicial}}" class="slider" id="cantidadSiempreEscalaGrandesInicial" name="cantidadSiempreEscalaGrandesInicial">
+<span id="cantidadSiempreEscalaGrandesInicialSpan">
+</span>
+</p>
+
+
+
+<p>
+Cantidad inicial de individuos chicos que escalan solo si el adversario es mas grande
+<br>
+<input type="range" min="0" max="10" value="{{cantidadEscalaSiElOtroEsMasGrandeChicosInicial}}" class="slider" id="cantidadEscalaSiElOtroEsMasGrandeChicosInicial" name="cantidadEscalaSiElOtroEsMasGrandeChicosInicial">
+<span id="cantidadEscalaSiElOtroEsMasGrandeChicosInicialSpan">
+</span>
+</p>
+
+<p>
+Cantidad inicial de individuos grandes que escalan solo si el adversario es mas grande
+<br>
+<input type="range" min="0" max="10" value="{{cantidadEscalaSiElOtroEsMasGrandeGrandesInicial}}" class="slider" id="cantidadEscalaSiElOtroEsMasGrandeGrandesInicial" name="cantidadEscalaSiElOtroEsMasGrandeGrandesInicial">
+<span id="cantidadEscalaSiElOtroEsMasGrandeGrandesInicialSpan">
+</span>
+</p>
+
+
+
+
+
+<p>
+Cantidad inicial de individuos chicos que escalan solo si el adversario es mas chico
+<br>
+<input type="range" min="0" max="10" value="{{cantidadEscalaSiElOtroEsMasChicoChicosInicial}}" class="slider" id="cantidadEscalaSiElOtroEsMasChicoChicosInicial" name="cantidadEscalaSiElOtroEsMasChicoChicosInicial">
+<span id="cantidadEscalaSiElOtroEsMasChicoChicosInicialSpan">
+</span>
+</p>
+
+<p>
+Cantidad inicial de individuos grandes que escalan solo si el adversario es mas chico
+<br>
+<input type="range" min="0" max="10" value="{{cantidadEscalaSiElOtroEsMasChicoGrandesInicial}}" class="slider" id="cantidadEscalaSiElOtroEsMasChicoGrandesInicial" name="cantidadEscalaSiElOtroEsMasChicoGrandesInicial">
+<span id="cantidadEscalaSiElOtroEsMasChicoGrandesInicialSpan">
+</span>
+</p>
+
+
+
+
+
+
+
+<p>
+Valor de un recurso. El ganador de un combate se queda con todo el recurso, si se comparte es mitad para cada uno
+<br>
+<input type="range" min="0" max="10" value="{{valorDelRecurso}}" class="slider" id="valorDelRecurso" name="valorDelRecurso">
+<span id="valorDelRecursoSpan">
+</span>
+</p>
+
+<p>
+Costo de una lesion. Solo el perdedor de un combate paga el costo
+<br>
+<input type="range" min="0" max="10" value="{{costoDeLesion}}" class="slider" id="costoDeLesion" name="costoDeLesion">
+<span id="costoDeLesionSpan">
+</span>
+</p>
+
+<p>
+Porcentaje de veces que el mas grande gana un combate. Si los individuos tienen el mismo tamano la mitad de las veces gana uno y la otra mitad gana el otro.
+<br>
+<input type="range" min="0" max="100" value="{{probabilidadDeQueElMayorGane}}" class="slider" id="probabilidadDeQueElMayorGane" name="probabilidadDeQueElMayorGane">
+<span id="probabilidadDeQueElMayorGaneSpan">
+</span>
+</p>
+
+
+<p>
+Edad en que se produce la reproduccion y mueren
+<br>
+<input type="range" min="0" max="1000" value="{{edadDeReproduccion}}" class="slider" id="edadDeReproduccion" name="edadDeReproduccion">
+<span id="edadDeReproduccionSpan">
+</span>
+</p>
+
+
+<p>
+Cantidad de simulaciones a realizar
+<br>
+<input type="range" min="0" max="50" value="{{CantidadDeSimulaciones}}" class="slider" id="CantidadDeSimulaciones" name="CantidadDeSimulaciones">
+<span id="CantidadDeSimulacionesSpan">
+</span>
+</p>
+
+<p>
+Cantidad de pasos dados en cada una de las simulaciones
+<br>
+<input type="range" min="0" max="100" value="{{CantidadDePasos}}" class="slider" id="CantidadDePasos" name="CantidadDePasos">
+<span id="CantidadDePasosSpan">
+</span>
+</p>
+
+
+</div>
+
+
+<input type="submit">
+</form>
+
+
+
+<script>
+
+
+var distanciaMaximaVecinosVar = document.getElementById("distanciaMaximaVecinos");
+var distanciaMaximaVecinosOutput = document.getElementById("distanciaMaximaVecinosSpan");
+distanciaMaximaVecinosOutput.innerHTML = distanciaMaximaVecinosVar.value;
+
+distanciaMaximaVecinosVar.oninput = function() {
+  distanciaMaximaVecinosOutput.innerHTML = this.value;
+}
+
+
+var cantidadSiempreEscalaChicosInicialslider = document.getElementById("cantidadSiempreEscalaChicosInicial");
+var cantidadSiempreEscalaChicosInicialoutput = document.getElementById("cantidadSiempreEscalaChicosInicialSpan");
+cantidadSiempreEscalaChicosInicialoutput.innerHTML = cantidadSiempreEscalaChicosInicialslider.value;
+
+cantidadSiempreEscalaChicosInicialslider.oninput = function() {
+  cantidadSiempreEscalaChicosInicialoutput.innerHTML = this.value;
+}
+
+
+var cantidadSiempreEscalaGrandesInicialslider = document.getElementById("cantidadSiempreEscalaGrandesInicial");
+var cantidadSiempreEscalaGrandesInicialoutput = document.getElementById("cantidadSiempreEscalaGrandesInicialSpan");
+cantidadSiempreEscalaGrandesInicialoutput.innerHTML = cantidadSiempreEscalaGrandesInicialslider.value;
+
+cantidadSiempreEscalaGrandesInicialslider.oninput = function() {
+  cantidadSiempreEscalaGrandesInicialoutput.innerHTML = this.value;
+}
+
+
+var cantidadNuncaEscalaChicosInicialslider = document.getElementById("cantidadNuncaEscalaChicosInicial");
+var cantidadNuncaEscalaChicosInicialoutput = document.getElementById("cantidadNuncaEscalaChicosInicialSpan");
+cantidadNuncaEscalaChicosInicialoutput.innerHTML = cantidadNuncaEscalaChicosInicialslider.value;
+
+cantidadNuncaEscalaChicosInicialslider.oninput = function() {
+  cantidadNuncaEscalaChicosInicialoutput.innerHTML = this.value;
+}
+
+var cantidadNuncaEscalaGrandesInicialslider = document.getElementById("cantidadNuncaEscalaGrandesInicial");
+var cantidadNuncaEscalaGrandesInicialoutput = document.getElementById("cantidadNuncaEscalaGrandesInicialSpan");
+cantidadNuncaEscalaGrandesInicialoutput.innerHTML = cantidadNuncaEscalaGrandesInicialslider.value;
+
+cantidadNuncaEscalaGrandesInicialslider.oninput = function() {
+  cantidadNuncaEscalaGrandesInicialoutput.innerHTML = this.value;
+}
+
+
+var cantidadEscalaSiElOtroEsMasGrandeChicosInicialslider = document.getElementById("cantidadEscalaSiElOtroEsMasGrandeChicosInicial");
+var cantidadEscalaSiElOtroEsMasGrandeChicosInicialoutput = document.getElementById("cantidadEscalaSiElOtroEsMasGrandeChicosInicialSpan");
+cantidadEscalaSiElOtroEsMasGrandeChicosInicialoutput.innerHTML = cantidadEscalaSiElOtroEsMasGrandeChicosInicialslider.value;
+
+cantidadEscalaSiElOtroEsMasGrandeChicosInicialslider.oninput = function() {
+  cantidadEscalaSiElOtroEsMasGrandeChicosInicialoutput.innerHTML = this.value;
+}
+
+var cantidadEscalaSiElOtroEsMasGrandeGrandesInicialslider = document.getElementById("cantidadEscalaSiElOtroEsMasGrandeGrandesInicial");
+var cantidadEscalaSiElOtroEsMasGrandeGrandesInicialoutput = document.getElementById("cantidadEscalaSiElOtroEsMasGrandeGrandesInicialSpan");
+cantidadEscalaSiElOtroEsMasGrandeGrandesInicialoutput.innerHTML = cantidadEscalaSiElOtroEsMasGrandeGrandesInicialslider.value;
+
+cantidadEscalaSiElOtroEsMasGrandeGrandesInicialslider.oninput = function() {
+  cantidadEscalaSiElOtroEsMasGrandeGrandesInicialoutput.innerHTML = this.value;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+var cantidadEscalaSiElOtroEsMasChicoChicosInicialslider = document.getElementById("cantidadEscalaSiElOtroEsMasChicoChicosInicial");
+var cantidadEscalaSiElOtroEsMasChicoChicosInicialoutput = document.getElementById("cantidadEscalaSiElOtroEsMasChicoChicosInicialSpan");
+cantidadEscalaSiElOtroEsMasChicoChicosInicialoutput.innerHTML = cantidadEscalaSiElOtroEsMasChicoChicosInicialslider.value;
+
+cantidadEscalaSiElOtroEsMasChicoChicosInicialslider.oninput = function() {
+  cantidadEscalaSiElOtroEsMasChicoChicosInicialoutput.innerHTML = this.value;
+}
+
+var cantidadEscalaSiElOtroEsMasChicoGrandesInicialslider = document.getElementById("cantidadEscalaSiElOtroEsMasChicoGrandesInicial");
+var cantidadEscalaSiElOtroEsMasChicoGrandesInicialoutput = document.getElementById("cantidadEscalaSiElOtroEsMasChicoGrandesInicialSpan");
+cantidadEscalaSiElOtroEsMasChicoGrandesInicialoutput.innerHTML = cantidadEscalaSiElOtroEsMasChicoGrandesInicialslider.value;
+
+cantidadEscalaSiElOtroEsMasChicoGrandesInicialslider.oninput = function() {
+  cantidadEscalaSiElOtroEsMasChicoGrandesInicialoutput.innerHTML = this.value;
+}
+
+
+
+
+
+
+var valorDelRecursoslider = document.getElementById("valorDelRecurso");
+var valorDelRecursooutput = document.getElementById("valorDelRecursoSpan");
+valorDelRecursooutput.innerHTML = valorDelRecursoslider.value;
+
+valorDelRecursoslider.oninput = function() {
+  valorDelRecursooutput.innerHTML = this.value;
+}
+
+
+var costoDeLesionslider = document.getElementById("costoDeLesion");
+var costoDeLesionoutput = document.getElementById("costoDeLesionSpan");
+costoDeLesionoutput.innerHTML = costoDeLesionslider.value;
+
+costoDeLesionslider.oninput = function() {
+  costoDeLesionoutput.innerHTML = this.value;
+}
+
+
+var probabilidadDeQueElMayorGaneslider = document.getElementById("probabilidadDeQueElMayorGane");
+var probabilidadDeQueElMayorGaneoutput = document.getElementById("probabilidadDeQueElMayorGaneSpan");
+probabilidadDeQueElMayorGaneoutput.innerHTML = probabilidadDeQueElMayorGaneslider.value;
+
+probabilidadDeQueElMayorGaneslider.oninput = function() {
+  probabilidadDeQueElMayorGaneoutput.innerHTML = this.value;
+}
+
+
+
+
+var edadDeReproduccionslider = document.getElementById("edadDeReproduccion");
+var edadDeReproduccionoutput = document.getElementById("edadDeReproduccionSpan");
+edadDeReproduccionoutput.innerHTML = edadDeReproduccionslider.value;
+
+edadDeReproduccionslider.oninput = function() {
+  cdadDeReproduccionoutput.innerHTML = this.value;
+}
+
+
+
+var CantidadDeSimulacionesslider = document.getElementById("CantidadDeSimulaciones");
+var CantidadDeSimulacionesoutput = document.getElementById("CantidadDeSimulacionesSpan");
+CantidadDeSimulacionesoutput.innerHTML = CantidadDeSimulacionesslider.value;
+
+CantidadDeSimulacionesslider.oninput = function() {
+  CantidadDeSimulacionesoutput.innerHTML = this.value;
+}
+
+
+var CantidadDePasosslider = document.getElementById("CantidadDePasos");
+var CantidadDePasosoutput = document.getElementById("CantidadDePasosSpan");
+CantidadDePasosoutput.innerHTML = CantidadDePasosslider.value;
+
+CantidadDePasosslider.oninput = function() {
+  CantidadDePasosoutput.innerHTML = this.value;
+}
+
+
+
+</script>
+
+<br>
+<br>
+{{porcentajesStr2}}
+
+
+	</body>
+</html>
