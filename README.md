@@ -2,7 +2,7 @@
 
 ## Simulacion online
 
-https://machos-hembras.herokuapp.com/
+https://grandes-chicos-comparten-pelea.herokuapp.com/
 
 
 ## Introduccion
