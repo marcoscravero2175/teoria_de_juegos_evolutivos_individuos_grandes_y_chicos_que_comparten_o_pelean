@@ -96,7 +96,9 @@ En ambos casos, si el valor del recurso es menor que el costo de lesión, obtene
 E(compartir, estrategia mixta) = E(pelear, estrategia mixta)
 P * E(H,H) + (1-P) * E(H, D) = P * E(D, H) + (1-P) * E(E, E)
 (1/2) * (V-C) * P + V * (1-P) = (1/2) * V * (1-P)
+
 C * P = V
+
 V = 5;  C = 10; P  = 0.50
 
 Veremos qué pasa en la simulación. ¿Al final de los juegos hay más individuos que resuelven sus conflictos a los golpes o deciden compartir?  ¿Qué pasa si en una población donde todos comparten se agrega un violento? ¿Puede invadir la población? ¿Qué pasa con una población donde todos son violentos y se agrega uno que comparte? 
@@ -359,6 +361,7 @@ Vimos que en todas las simulaciones donde hay un 20% más de individuos que sigu
 
 Como pudimos una población con 10 individuos chicos que pelean solo si su oponente es más grande, 8 individuos grandes que pelean solo si su oponente es más chico, los individuos grandes ganan el 80% de las peleas, el costo de lesión 5 puntos y valor del recurso 10 puntos evoluciona a una población donde todos los individuos son chicos y pelean solo si su oponente es más grande.
 
+## BIBLIOGRAFIA
 
 * **Richard Dawkins, El Gen Egoista.**
 * **Richard Dawkins, El Relojero Ciego.**
